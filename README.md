@@ -16,7 +16,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_advanced_threat_protection | ❌ | |
 |azurerm_advisor_recommendations | ❌ | |
 |azurerm_analysis_services_server | ❌ | |
-|azurerm_api_management | ❌ | |
+|azurerm_api_| ❌ | | | ❌ | |
 |azurerm_api_management_api | ❌ | |
 |azurerm_api_management_api_diagnostic | ❌ | |
 |azurerm_api_management_api_operation | ❌ | |
@@ -86,6 +86,8 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_automation_variable_datetime | ❌ | |
 |azurerm_automation_variable_int | ❌ | |
 |azurerm_automation_variable_string | ❌ | |
+|azurerm_automation_source_control | ✔ | Management |
+|azurerm_automation_software_update_configuration | ✔ | Management |
 |azurerm_availability_set | ❌ | |
 |azurerm_backup_container_storage_account | ❌ | |
 |azurerm_backup_policy_file_share | ❌ | |
@@ -142,7 +144,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_cosmosdb_table | ❌ | |
 |azurerm_cost_management_export_resource_group | ❌ | |
 |azurerm_custom_provider | ❌ | |
-|azurerm_dashboard | ❌ | |
+|azurerm_dashboard | ❌ | Management |
 |azurerm_data_factory | ❌ | |
 |azurerm_data_factory_dataset_azure_blob | ❌ | |
 |azurerm_data_factory_dataset_cosmosdb_sqlapi | ❌ | |
@@ -213,7 +215,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_dns_ptr_record | ❌ | |
 |azurerm_dns_srv_record | ❌ | |
 |azurerm_dns_txt_record | ❌ | |
-|azurerm_dns_zone | ✔ | Management |
+|azurerm_dns_zone | ✔ | Connectivity|
 |azurerm_eventgrid_domain | ❌ | |
 |azurerm_eventgrid_domain_topic | ❌ | |
 |azurerm_eventgrid_event_subscription | ❌ | |
@@ -226,9 +228,9 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_eventhub_namespace | ❌ | |
 |azurerm_eventhub_namespace_authorization_rule | ❌ | |
 |azurerm_eventhub_namespace_disaster_recovery_config | ❌ | |
-|azurerm_express_route_circuit | ✔ | Management |
+|azurerm_express_route_circuit | ✔ | Connectivity|
 |azurerm_express_route_circuit_authorization | ❌ | |
-|azurerm_express_route_circuit_peering | ✔ | Management |
+|azurerm_express_route_circuit_peering | ✔ | Connectivity|
 |azurerm_express_route_gateway | ❌ | |
 |azurerm_federated_identity_credential | ❌ | |
 |azurerm_firewall | ❌ | |
@@ -281,7 +283,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_iothub_route | ❌ | |
 |azurerm_iothub_shared_access_policy | ❌ | |
 |azurerm_ip_group | ❌ | |
-|azurerm_key_vault | ✔ | Management |
+|azurerm_key_vault | ✔ | Identity |
 |azurerm_key_vault_access_policy | ❌ | |
 |azurerm_key_vault_certificate | ❌ | |
 |azurerm_key_vault_certificate_issuer | ❌ | |
@@ -388,7 +390,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_netapp_snapshot | ❌ | |
 |azurerm_netapp_volume | ❌ | |
 |azurerm_network_connection_monitor | ❌ | |
-|azurerm_network_ddos_protection_plan | ✔ | Management |
+|azurerm_network_ddos_protection_plan | ✔ | Connectivity|
 |azurerm_network_interface | ❌ | |
 |azurerm_network_interface_application_gateway_backend_address_pool_association | ❌ | |
 |azurerm_network_interface_application_security_group_association | ❌ | |
@@ -400,7 +402,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_network_security_group | ❌ | |
 |azurerm_network_security_rule | ❌ | |
 |azurerm_network_service_tags | ❌ | |
-|azurerm_network_watcher | ✔ | Management |
+|azurerm_network_watcher | ✔ | Connectivity|
 |azurerm_network_watcher_flow_log | ❌ | |
 |azurerm_nginx_deployment | ❌ | |
 |azurerm_notification_hub | ❌ | |
@@ -446,7 +448,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_private_link_service | ❌ | |
 |azurerm_private_link_service_endpoint_connections | ❌ | |
 |azurerm_proximity_placement_group | ❌ | |
-|azurerm_public_ip | ✔ | Management |
+|azurerm_public_ip | ✔ | Connectivity|
 |azurerm_public_ip_prefix | ❌ | |
 |azurerm_public_ips | ❌ | |
 |azurerm_purview_account | ❌ | |
@@ -458,20 +460,20 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_redis_linked_server | ❌ | |
 |azurerm_relay_hybrid_connection | ❌ | |
 |azurerm_relay_namespace | ❌ | |
-|azurerm_resource_group | ✔ | Management |
+|azurerm_resource_group | ✔ | Connectivity, Management |
 |azurerm_resource_group_policy_assignment | ❌ | |
 |azurerm_resource_group_template_deployment | ❌ | |
-|azurerm_role_assignment | ✔ | Management |
+|azurerm_role_assignment | ✔ | Connectivity|
 |azurerm_role_definition | ❌ | |
 |azurerm_route | ❌ | |
 |azurerm_route_filter | ❌ | |
 |azurerm_route_table | ❌ | |
 |azurerm_search_service | ❌ | |
-|azurerm_security_center_auto_provisioning | ✔ | Management |
+|azurerm_security_center_auto_provisioning | ✔ | Connectivity|
 |azurerm_security_center_automation | ❌ | |
-|azurerm_security_center_contact | ✔ | Management |
-|azurerm_security_center_setting | ✔ | Management |
-|azurerm_security_center_subscription_pricing | ✔ | Management |
+|azurerm_security_center_contact | ✔ | Connectivity|
+|azurerm_security_center_setting | ✔ | Connectivity|
+|azurerm_security_center_subscription_pricing | ✔ | Connectivity|
 |azurerm_security_center_workspace | ❌ | |
 |azurerm_sentinel_alert_rule | ❌ | |
 |azurerm_sentinel_alert_rule_ms_security_incident | ❌ | |
@@ -543,12 +545,12 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_stream_analytics_stream_input_blob | ❌ | |
 |azurerm_stream_analytics_stream_input_eventhub | ❌ | |
 |azurerm_stream_analytics_stream_input_iothub | ❌ | |
-|azurerm_subnet | ✔ | Management |
+|azurerm_subnet | ✔ | Connectivity|
 |azurerm_subnet_nat_gateway_association | ❌ | |
 |azurerm_subnet_network_security_group_association | ❌ | |
 |azurerm_subnet_route_table_association | ❌ | |
 |azurerm_subscription | ❌ | |
-|azurerm_subscription_policy_assignment | ✔ | Management |
+|azurerm_subscription_policy_assignment | ✔ | Connectivity|
 |azurerm_subscription_template_deployment | ❌ | |
 |azurerm_subscriptions | ❌ | |
 |azurerm_synapse_firewall_rule | ❌ | |
@@ -584,9 +586,9 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_virtual_machine_extension | ❌ | |
 |azurerm_virtual_machine_scale_set | ❌ | |
 |azurerm_virtual_machine_scale_set_extension | ❌ | |
-|azurerm_virtual_network | ✔ | Management |
-|azurerm_virtual_network_gateway | ✔ | Management |
-|azurerm_virtual_network_gateway_connection | ✔ | Management |
+|azurerm_virtual_network | ✔ | Connectivity|
+|azurerm_virtual_network_gateway | ✔ | Connectivity|
+|azurerm_virtual_network_gateway_connection | ✔ | Connectivity|
 |azurerm_virtual_network_peering | ❌ | |
 |azurerm_virtual_wan | ❌ | |
 |azurerm_vmware_cluster | ❌ | |
