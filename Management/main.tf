@@ -98,3 +98,61 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
     sku                 = var.log_analytics_workspace.sku
     retention_in_days   = var.log_analytics_workspace.retention_in_days
 }
+# ======================================================================== 
+# Defender for Cloud
+# ======================================================================== 
+resource "azurerm_security_center_setting" "security_center_setting_mcas" {
+  setting_name = "MCAS"
+  enabled      = var.defender_for_cloud.settings.mcas
+}
+resource "azurerm_security_center_setting" "security_center_setting_wdatp" {
+  setting_name = "WDATP"
+  enabled      = var.defender_for_cloud.settings.wdatp
+}
+resource "azurerm_security_center_setting" "security_center_setting_sentinel" {
+  setting_name = "SENTINEL"
+  enabled      = var.defender_for_cloud.settings.sentinel
+}
+resource "azurerm_security_center_contact" "security_center_contact" {
+  name                = var.defender_for_cloud.contact.name
+  email               = var.defender_for_cloud.contact.email
+  phone               = var.defender_for_cloud.contact.phone
+  alert_notifications = var.defender_for_cloud.contact.alert_notifications
+  alerts_to_admins    = var.defender_for_cloud.contact.alerts_to_admins
+}
+resource "azurerm_security_center_auto_provisioning" "security_center_auto_provisioning" {
+  auto_provision = var.defender_for_cloud.auto_provision
+}
+resource "azurerm_security_center_subscription_pricing" "security_center_subscription_pricings" {
+  for_each      = { for security_center_subscription_pricing in var.defender_for_cloud.subscription_pricings : security_center_subscription_pricing.resource_type => security_center_subscription_pricing }
+  tier          = each.value.tier
+  resource_type = each.key
+}
+
+# To double check if they are neccessary
+# resource "azurerm_advanced_threat_protection" "example" {
+#   target_resource_id = azurerm_storage_account.example.id # The ID of the Azure Resource which to enable Advanced Threat Protection on.
+#   enabled            = true
+# }
+# resource "azurerm_security_center_server_vulnerability_assessment" "example" {
+#   virtual_machine_id = azurerm_linux_virtual_machine.example.id # The ID of the virtual machine to be monitored by vulnerability assessment.
+# }
+# resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "example" {
+#   virtual_machine_id = azurerm_linux_virtual_machine.example.id # The ID of the virtual machine to be monitored by vulnerability assessment.
+# }
+# resource "azurerm_security_center_auto_provisioning" "security_center_auto_provisioning" {
+#   auto_provision = var.defender_for_cloud.auto_provision # Should the security agent be automatically provisioned on Virtual Machines in this subscription
+# }
+
+# resource "azurerm_security_center_assessment_policy" "example" {
+#   display_name = "Test Display Name"
+#   severity     = "Medium"
+#   description  = "Test Description"
+# }
+# resource "azurerm_security_center_assessment" "example" {
+#   assessment_policy_id = azurerm_security_center_assessment_policy.example.id # The ID of the security Assessment policy to apply to this resource.
+#   target_resource_id   = azurerm_linux_virtual_machine_scale_set.example.id # The ID of the target resource.
+#   status {
+#     code = "Healthy" # Healthy, Unhealthy and NotApplicable.
+#   }
+# }

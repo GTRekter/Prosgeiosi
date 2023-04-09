@@ -32,3 +32,45 @@ variable "key_vault" {
   })
   description = "Key vault settings"
 }
+
+
+
+
+variable "virtual_machines" {
+  type = map(object({
+    name                           = string
+    os_type                        = string
+    admin_password                 = string
+    admin_username                 = string
+    disable_password_authentication = bool
+    ssh_public_key_file            = string
+    size                           = string
+    os_disk = object({
+      caching                  = string
+      disk_size_gb             = number
+      name                     = string
+      storage_account_type     = string
+      write_accelerator_enabled = bool
+      disk_encryption_set_key   = string
+    })
+    diff_disk_settings = object({
+      option = string
+    })
+    source_image_reference = object({
+      publisher = string
+      offer     = string
+      sku       = string
+      version   = string
+    })
+    custom_image_id       = string
+    custom_image_version  = string
+    identity = object({
+      type = string
+    })
+    plan = object({
+      name      = string
+      product   = string
+      publisher = string
+    })
+  }))
+}

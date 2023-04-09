@@ -31,7 +31,7 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_api_management_custom_domain | ❌ | |
 |azurerm_api_management_diagnostic | ❌ | |
 |azurerm_api_management_gateway | ❌ | |
-|azurerm_api_management_group | ❌ | |
+|azurerm_api_management_group | ✔ | Shared |
 |azurerm_api_management_group_user | ❌ | |
 |azurerm_api_management_identity_provider_aad | ❌ | |
 |azurerm_api_management_identity_provider_facebook | ❌ | |
@@ -469,11 +469,11 @@ This is the current status of the resources that have been implemented by the re
 |azurerm_route_filter | ❌ | |
 |azurerm_route_table | ❌ | |
 |azurerm_search_service | ❌ | |
-|azurerm_security_center_auto_provisioning | ✔ | Connectivity|
+|azurerm_security_center_auto_provisioning | ✔ | Connectivity, Management |
 |azurerm_security_center_automation | ❌ | |
-|azurerm_security_center_contact | ✔ | Connectivity|
-|azurerm_security_center_setting | ✔ | Connectivity|
-|azurerm_security_center_subscription_pricing | ✔ | Connectivity|
+|azurerm_security_center_contact | ✔ | Connectivity, Management |
+|azurerm_security_center_setting | ✔ | Connectivity, Management |
+|azurerm_security_center_subscription_pricing | ✔ | Connectivity, Management |
 |azurerm_security_center_workspace | ❌ | |
 |azurerm_sentinel_alert_rule | ❌ | |
 |azurerm_sentinel_alert_rule_ms_security_incident | ❌ | |

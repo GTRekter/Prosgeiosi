@@ -77,3 +77,75 @@ log_analytics_workspace = {
     sku                 = "Free" # Free, PerNode, Premium, Standard, Standalone, Unlimited, CapacityReservation, and PerGB2018. Defaults to PerGB2018.
     retention_in_days   = 30 # range between 30 and 730
 }
+defender_for_cloud = {
+    subscription_pricings = [
+        {
+            tier          = "Free" # Free or Standard
+            resource_type = "AppServices" # AppServices, ContainerRegistry, KeyVaults, KubernetesService, SqlServers, SqlServerVirtualMachines, StorageAccounts, VirtualMachines, Arm, Dns, OpenSourceRelationalDatabases, Containers, CosmosDbs and CloudPosture. Defaults to VirtualMachines
+        },
+        {
+            tier          = "Free"
+            resource_type = "ContainerRegistry"
+        },
+        {
+            tier          = "Free"
+            resource_type = "KeyVaults"
+        },
+        {
+            tier          = "Free"
+            resource_type = "KubernetesService"
+        },{
+            tier          = "Free"
+            resource_type = "SqlServers"
+        },
+        {
+            tier          = "Free"
+            resource_type = "SqlServerVirtualMachines"
+        },
+        {
+            tier          = "Free"
+            resource_type = "StorageAccounts"
+        },
+        {
+            tier          = "Free"
+            resource_type = "VirtualMachines"
+        },
+        {
+            tier          = "Free"
+            resource_type = "Arm"
+        },
+        {
+            tier          = "Free"
+            resource_type = "Dns"
+        },
+        {
+            tier          = "Free"
+            resource_type = "OpenSourceRelationalDatabases"
+        },
+        {
+            tier          = "Free"
+            resource_type = "Containers"
+        },
+        {
+            tier          = "Free"
+            resource_type = "CosmosDbs"
+        },
+        {
+            tier          = "Free"
+            resource_type = "CloudPosture"
+        }
+    ]
+    settings = {
+        mcas     = false
+        wdatp    = false
+        sentinel = false
+    }
+    contact = {
+        name                = "Ivan Porta"
+        email               = "porta.ivan@outlook.com"
+        phone               = "123456789"
+        alert_notifications = true
+        alerts_to_admins    = true
+    }
+    auto_provision = "On"
+}

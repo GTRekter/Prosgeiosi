@@ -73,3 +73,20 @@ variable "log_analytics_workspace" {
   })
   description = "Log Analytics Workspace settings"
 }
+variable "defender_for_cloud" {
+  type = object({
+    subscription_pricings = list(object({
+      tier          = string
+      resource_type = string
+    }))
+    settings = map(string)
+    contact = object({
+      name                = string
+      email               = string
+      phone               = string
+      alert_notifications = bool
+      alerts_to_admins    = bool
+    })
+    auto_provision = string
+  })
+}

@@ -42,67 +42,74 @@ resource "azurerm_key_vault" "key_vault" {
 }
 
 
+
+
+
+
+
+
+
+https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/identity-access-active-directory-hybrid-identity
+resource "azurerm_virtual_network" "virtual_network" {
+  name                = "example-network"
+  address_space       = ["10.0.0.0/16"]
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
+}
+
+resource "azurerm_subnet" "subnet" {
+  name                 = "internal"
+  resource_group_name  = azurerm_resource_group.resource_group.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+resource "azurerm_network_interface" "network_interface" {
+  name                            = "example-nic"
+  resource_group_name             = azurerm_resource_group.resource_group.name
+  location                        = azurerm_resource_group.resource_group.location
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
 resource "azurerm_linux_virtual_machine" "virtual_machine" {
-    for_each = { for virtual_machine in var.virtual_machines : virtual_machine.name => virtual_machine if virtual_machine.os_type == "Linux" }
+    for_each                        = { for virtual_machine in var.virtual_machines : virtual_machine.name => virtual_machine if virtual_machine.os_type == "Linux" }
+    name                            = each.key 
+    resource_group_name             = azurerm_resource_group.resource_group.name
+    location                        = azurerm_resource_group.resource_group.location
     admin_password                  = each.value.disable_password_authentication == false ? each.value.admin_password : null
     admin_username                  = each.value.admin_username
     allow_extension_operations      = try(each.value.allow_extension_operations, null)
-    availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
-    computer_name                   = azurecaf_name.linux_computer_name[each.key].result
-    disable_password_authentication = try(each.value.disable_password_authentication, true)
+    disable_password_authentication = each.value.disable_password_authentication
     encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
     eviction_policy                 = try(each.value.eviction_policy, null)
     license_type                    = try(each.value.license_type, null)
-    location                        = local.location
     max_bid_price                   = try(each.value.max_bid_price, null)
-    name                            = azurecaf_name.linux[each.key].result
-    network_interface_ids           = local.nic_ids
+    network_interface_ids           = [azurerm_network_interface.network_interface.id]
     priority                        = try(each.value.priority, null)
     provision_vm_agent              = try(each.value.provision_vm_agent, true)
-    proximity_placement_group_id    = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
-    resource_group_name             = local.resource_group_name
     size                            = each.value.size
     tags                            = merge(local.tags, try(each.value.tags, null))
     zone                            = try(each.value.zone, null)
-    # dynamic "admin_ssh_key" {
-    #     for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
-    #     content {
-    #         username   = each.value.admin_username
-    #         public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
-    #     }
-    # }
-    # dynamic "admin_ssh_key" {
-    #     for_each = { for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.ssh_public_key_id) }
-    #     content {
-    #         username   = each.value.admin_username
-    #         public_key = replace(data.external.ssh_public_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
-    #     }
-    # }
-    # dynamic "admin_ssh_key" {
-    #     for_each = { for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.secret_key_id) }
-    #     content {
-    #         username   = each.value.admin_username
-    #         public_key = replace(data.external.secret_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
-    #     }
-    # }
-    # dynamic "admin_ssh_key" {
-    #     for_each = { for key, value in try(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys, {}) : key => value if can(value.keyvault_key) }
-    #     content {
-    #         username   = each.value.admin_username
-    #         public_key = replace(data.external.ssh_secret_keyvault[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
-    #     }
-    # }
+    dynamic "admin_ssh_key" {
+        for_each = each.value.disable_password_authentication && each.value.ssh_public_key_file != null ? [1] : []
+        content {
+            username   = each.value.admin_username
+            public_key = file(var.ssh_public_key_file)
+        }
+    }
     os_disk {
         caching                   = try(each.value.os_disk.caching, null)
         disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-        name                      = try(azurecaf_name.os_disk_linux[each.key].result, null)
+        name                      = try(each.value.os_disk.name, null)
         storage_account_type      = try(each.value.os_disk.storage_account_type, null)
         write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
         disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
         dynamic "diff_disk_settings" {
             for_each = try(each.value.diff_disk_settings, false) == false ? [] : [1]
             content {
-            option = each.value.diff_disk_settings.option
+                option = each.value.diff_disk_settings.option
             }
         }
     }
